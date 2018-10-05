@@ -6,8 +6,8 @@ plugins {
 }
 
 mainClassName = 'GreeterApp'
-group = 'temp'
-version = '5.0'
+group = 'org.temp'
+version = '4.0'
 
 repositories {
     jcenter()
@@ -27,23 +27,29 @@ task javadocJar(type: Jar) {
     from javadoc.destinationDir
 }
 
+def initScript = file("$buildDir/scripts/consuming-jvm-libraries.bat")
+
+//The artifacts.add() method returns an artifact object of type PublishArtifact that can then be used in defining a publication
+def scriptArtifact = artifacts.add('archives', initScript) {
+    type 'bat'
+}
+
 publishing {
     publications {
+
         mavenJava(MavenPublication) {
             from components.java
 
             artifact sourcesJar
             artifact javadocJar
+            artifact scriptArtifact
         }
     }
 
     repositories {
         maven {
-            url 'https://nexus.myorg.com/repository/third-party-lib/'
-            credentials {
-                username 'userid'
-                password '*****'
-            }
+            name = 'myRepo'
+            url = "file://${buildDir}/repo"
         }
     }
 }

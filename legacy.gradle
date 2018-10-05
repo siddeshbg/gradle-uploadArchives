@@ -1,0 +1,33 @@
+
+plugins {
+    id "java"
+    id "application"
+    id "maven"
+}
+
+mainClassName = 'GreeterApp'
+group = 'org.temp'
+version = '1.0'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    implementation 'com.github.lalyos:jfiglet:0.0.8'
+}
+
+def someFile = file('build/scripts/greeterApp.bat')
+
+
+artifacts {
+    archives someFile
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "file://localhost/tmp/myRepo/")
+        }
+    }
+}

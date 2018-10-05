@@ -6,8 +6,8 @@ plugins {
 }
 
 mainClassName = 'GreeterApp'
-group = 'temp'
-version = '5.0'
+group = 'org.temp'
+version = '3.0'
 
 repositories {
     jcenter()
@@ -39,11 +39,9 @@ publishing {
 
     repositories {
         maven {
-            url 'https://nexus.myorg.com/repository/third-party-lib/'
-            credentials {
-                username 'userid'
-                password '*****'
-            }
+            name = 'myRepo'
+            url = "file://${buildDir}/repo"
         }
     }
 }
+

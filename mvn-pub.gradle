@@ -1,0 +1,33 @@
+
+plugins {
+    id "java"
+    id "application"
+    id 'maven-publish'
+}
+
+mainClassName = 'GreeterApp'
+group = 'org.temp'
+version = '2.0'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    implementation 'com.github.lalyos:jfiglet:0.0.8'
+}
+
+publishing {
+    publications {
+        myLibrary(MavenPublication) {
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            name = 'myRepo'
+            url = "file://${buildDir}/repo"
+        }
+    }
+}
