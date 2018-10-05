@@ -134,7 +134,7 @@ available publishing tasks
 ```aidl
 ./gradlew -b mvn-pub.gradle clean publish
 ```
-This will publish artifact under `build/repo/org/temp/consuming-jvm-libraries/2.0/`
+This will publish artifact under `build/repo/org/temp/gradle-uploadArchives/2.0/`
 
 #### Example 2: Adding custom artifacts to a publication
 * This example is to publish additional artifacts like "-sources" and "-javadoc" JARs
@@ -184,7 +184,7 @@ argument accepted by Project.file(java.lang.Object), such as a File instance or 
 * Refer mvn-publish-custom2.gradle
 
 ```mvn-publish-custom2.gradle
-def initScript = file("$buildDir/scripts/consuming-jvm-libraries.bat")
+def initScript = file("$buildDir/scripts/gradle-uploadArchives.bat")
 
 def scriptArtifact = artifacts.add('archives', initScript) {
     type 'bat'

@@ -27,7 +27,7 @@ task javadocJar(type: Jar) {
     from javadoc.destinationDir
 }
 
-def initScript = file("$buildDir/scripts/consuming-jvm-libraries.bat")
+def initScript = file("$buildDir/scripts/gradle-uploadArchives.bat")
 
 //The artifacts.add() method returns an artifact object of type PublishArtifact that can then be used in defining a publication
 def scriptArtifact = artifacts.add('archives', initScript) {
