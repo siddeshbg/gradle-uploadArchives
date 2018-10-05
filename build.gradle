@@ -1,0 +1,86 @@
+
+plugins {
+    id "java"
+    id "application"
+    // 1: id "maven"
+    id 'maven-publish'
+}
+
+mainClassName = 'GreeterApp'
+group = 'org.temp'
+version = '3.4'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    implementation 'com.github.lalyos:jfiglet:0.0.8'
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allJava
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+def initScript = file("$buildDir/scripts/greeterApp")
+
+//The artifacts.add() method returns an artifact object of type PublishArtifact that can then be used in defining a publication
+def scriptArtifact = artifacts.add('archives', initScript) {
+    type 'sh'
+}
+
+publishing {
+    publications {
+        /* 1:
+        myLibrary(MavenPublication) {
+            from components.java
+        }
+        */
+
+        mavenJava(MavenPublication) {
+            from components.java
+
+            artifact sourcesJar
+            artifact javadocJar
+            //artifact scriptArtifact
+        }
+    }
+
+    repositories {
+        maven {
+            //name = 'myRepo'
+            //url = "file://${buildDir}/repo"
+
+            url 'https://nexus3.corp.appdynamics.com/repository/third-party-lib/'
+            credentials {
+                username 'siddesh.gurusiddappa'
+                password 'S@m1kshass'
+            }
+        }
+    }
+}
+
+
+/* 1:
+def someFile = file('build/scripts/greeterApp.bat')
+
+
+artifacts {
+    archives someFile
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "file://localhost/tmp/myRepo/")
+        }
+    }
+}
+*/
+
